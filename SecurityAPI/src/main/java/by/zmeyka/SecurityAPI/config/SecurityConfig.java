@@ -27,12 +27,15 @@ public class SecurityConfig {
 
       security.csrf().disable().authorizeHttpRequests().
               requestMatchers("/auth/login","/error").permitAll().
+              requestMatchers("/auth/registration").permitAll().
               anyRequest().authenticated()
                       .and().
               formLogin().loginPage("/auth/login")
               .loginProcessingUrl("/process_login")
               .defaultSuccessUrl("/people",true)
-              .failureUrl("/auth/login?error");
+              .failureUrl("/auth/login?error")
+              .and()
+              .logout().logoutUrl("/logout").logoutSuccessUrl("/auth/login");
 
        return security.build();
 
